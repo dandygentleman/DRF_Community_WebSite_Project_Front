@@ -1,0 +1,6 @@
+{
+    "html.format.enable": false,
+    "prettier.useTabs": false,
+    "prettier.tabWidth": 4,
+    "liveServer.settings.port": 5500
+}
