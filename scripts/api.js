@@ -88,7 +88,7 @@ function handleLogout() {
     localStorage.removeItem("access")
     localStorage.removeItem("refresh")
     localStorage.removeItem("payload")
-    location.reload()
+    window.location.replace(`${frontend_base_url}/`)
 }
 
 
@@ -97,6 +97,48 @@ function checkLogin(){
     if(payload){
         window.location.replace(`${frontend_base_url}/`)
     }
+}
+
+
+async function handleSignout() {
+    const password = document.getElementById("signout-password").value
+    let token = localStorage.getItem("access")
+
+    const response = await fetch(`${backend_base_url}/user/sign/`, {
+        headers: {
+            'content-type': 'application/json',
+            "Authorization": `Bearer ${token}`
+        },
+        method: 'PUT',
+        body: JSON.stringify({
+            "password": password
+        })
+    })
+
+    return response
+}
+
+
+async function handlePasswordChange() {
+    const currentPassword = document.getElementById("current-password").value
+    const newpassword = document.getElementById("new-password").value
+    const newpassword2 = document.getElementById("new-password2").value
+    let token = localStorage.getItem("access")
+
+    const response = await fetch(`${backend_base_url}/user/sign/`, {
+        headers: {
+            'content-type': 'application/json',
+            "Authorization": `Bearer ${token}`
+        },
+        method: 'PATCH',
+        body: JSON.stringify({
+            "current_password": currentPassword,
+            "password": newpassword,
+            "password2": newpassword2
+        })
+    })
+
+    return response
 }
 
 

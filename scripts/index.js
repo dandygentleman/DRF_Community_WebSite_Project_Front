@@ -46,10 +46,7 @@ async function loadArticles(pageNum){
 
     const pagecount = articles.count/10+1
 
-    console.log(pagecount)
-
     for (i=1; i < pagecount; i++){
-        console.log("헤이")
         const newPageBtn = document.createElement("li")
         newPageBtn.setAttribute("class", "page-item")
         const newPageLink = document.createElement("a")
