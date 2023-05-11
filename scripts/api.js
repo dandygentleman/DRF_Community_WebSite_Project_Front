@@ -101,12 +101,7 @@ function checkLogin(){
 
 
 async function getArticles(pageNum){
-    const response = await fetch(`${backend_base_url}/article/?page=${pageNum}`, {
-        headers: {
-            "Authorization": "Bearer " + localStorage.getItem("access")
-        },
-        method: 'GET',
-    })
+    const response = await fetch(`${backend_base_url}/article/?page=${pageNum}`)
 
     if(response.status==200){
         const response_json = await response.json()
