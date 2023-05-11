@@ -1,3 +1,8 @@
+function articleDetail(article_id){
+    window.location.href = `${frontend_base_url}/article_detail.html?article_id=${article_id}`
+}
+
+
 window.onload = async function loadArticles(){
     articles = await getArticles()
     console.log(articles)
@@ -9,6 +14,7 @@ window.onload = async function loadArticles(){
         newBtn.setAttribute("type", "button")
         newBtn.setAttribute("class", "list-group-item list-group-item-action")
         newBtn.setAttribute("id", article.id)
+        newBtn.setAttribute("onclick", `articleDetail(${article.id})`)
 
         const newDiv = document.createElement("div")
         newDiv.setAttribute("class", "d-flex w-100 justify-content-between")
