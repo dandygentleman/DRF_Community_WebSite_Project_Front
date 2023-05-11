@@ -3,13 +3,14 @@ function articleDetail(article_id){
 }
 
 
-window.onload = async function loadArticles(){
-    articles = await getArticles()
+async function loadArticles(pageNum){
+    articles = await getArticles(pageNum)
     console.log(articles)
 
     const article_list = document.getElementById("article-list")
+    article_list.innerHTML = ""
 
-    articles.forEach(article => {
+    articles.results.forEach(article => {
         const newBtn = document.createElement("button")
         newBtn.setAttribute("type", "button")
         newBtn.setAttribute("class", "list-group-item list-group-item-action")
@@ -38,6 +39,29 @@ window.onload = async function loadArticles(){
         newBtn.appendChild(newAuthor)
 
         article_list.append(newBtn)
-
     });
+
+    const pagination = document.getElementById("pagination") 
+    pagination.innerHTML = ""
+
+    const pagecount = articles.count/10+1
+
+    console.log(pagecount)
+
+    for (i=1; i < pagecount; i++){
+        console.log("헤이")
+        const newPageBtn = document.createElement("li")
+        newPageBtn.setAttribute("class", "page-item")
+        const newPageLink = document.createElement("a")
+        newPageLink.setAttribute("class", "page-link")
+        newPageLink.setAttribute("onclick", `loadArticles(${i})`)
+        newPageLink.innerText = i
+        newPageBtn.appendChild(newPageLink)
+        pagination.append(newPageBtn)
+    }
+}
+
+
+window.onload = async function(){
+    await loadArticles(1);
 }

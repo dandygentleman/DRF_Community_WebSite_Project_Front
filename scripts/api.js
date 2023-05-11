@@ -100,8 +100,8 @@ function checkLogin(){
 }
 
 
-async function getArticles(){
-    const response = await fetch(`${backend_base_url}/article/`, {
+async function getArticles(pageNum){
+    const response = await fetch(`${backend_base_url}/article/?page=${pageNum}`, {
         headers: {
             "Authorization": "Bearer " + localStorage.getItem("access")
         },
