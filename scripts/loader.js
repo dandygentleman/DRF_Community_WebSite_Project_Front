@@ -31,17 +31,26 @@ async function injectNavbar(){
         navbarLeft.append(articleCreateLi)
 
         let navbarRight = document.getElementById("navbar-right")
-        let newLi = document.createElement("li")
-        newLi.setAttribute("class","nav-item")
+        let logoutLi = document.createElement("li")
+        logoutLi.setAttribute("class","nav-item")
 
         let logoutBtn = document.createElement("button")
         logoutBtn.setAttribute("class","nav-link btn")
         logoutBtn.innerText = "로그아웃"
         logoutBtn.setAttribute("onclick", "handleLogout()")
+        logoutLi.appendChild(logoutBtn)
         
-        newLi.appendChild(logoutBtn)
+        let mypageLi = document.createElement("li")
+        mypageLi.setAttribute("class","nav-item")
 
-        navbarRight.append(newLi)
+        let mypageLink = document.createElement("a")
+        mypageLink.setAttribute("class","nav-link")
+        mypageLink.setAttribute("href","/mypage.html")
+        mypageLink.innerHTML = "마이페이지"
+        mypageLi.appendChild(mypageLink)
+
+        navbarRight.append(mypageLi)
+        navbarRight.append(logoutLi)
 
         let loginButton = document.getElementById("login-button")
         loginButton.style.display = "none";

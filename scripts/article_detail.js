@@ -22,7 +22,7 @@ let articleId
 // }
 
 
-async function loadArticles(articleId){
+async function loadArticle(articleId){
     const response = await getArticle(articleId);
 
     const articleTitle = document.getElementById("article-title")
@@ -52,6 +52,6 @@ window.onload = async function() {
     const urlParams = new URLSearchParams(window.location.search);
     articleId = urlParams.get('article_id');
 
-    await loadArticles(articleId);
+    await loadArticle(articleId);
     // await loadComments(articleId);
 }
