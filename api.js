@@ -158,3 +158,38 @@ async function getArticle(articleId){
         alert(response.status)
     }
 }
+
+
+// async function getComments(articleId){
+//     const response = await fetch(`${backend_base_url}/article/${articleId}/comment/`)
+
+//     if(response.status == 200) {
+//         response_json = await response.json()
+//         return response_json
+//     } else {
+//         alert(response.status)
+//     }
+// }
+
+
+// async function postComment(articleId, newComment){
+//     let token = localStorage.getItem("access")
+
+//     const response = await fetch(`${backend_base_url}/article/${articleId}/comment/`, {
+//         method: 'POST',
+//         headers: {
+//             'content-type': 'application/json',
+//             "Authorization": `Bearer ${token}`
+//         },
+//         body: JSON.stringify({
+//             "content": newComment,
+//         })
+//     })
+
+//     if(response.status == 200) {
+//         response_json = await response.json()
+//         return response_json
+//     } else {
+//         alert(response.status)
+//     }
+// }
