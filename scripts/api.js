@@ -244,6 +244,47 @@ async function deleteArticle(articleId){
     }
 }
 
+
+async function likeArticle(articleId){
+    let token = localStorage.getItem("access")
+
+    const response = await fetch(`${backend_base_url}/article/${articleId}/like/`, {
+        method: 'POST',   
+        headers: {
+            "Authorization": `Bearer ${token}`
+        }
+    })
+
+    if(response.status == 200) {
+        console.log(response)
+        alert("좋아요 완료!")
+        location.reload();
+    } else {
+        alert(response.status)
+    }
+}
+
+
+async function bookmarkArticle(articleId){
+    let token = localStorage.getItem("access")
+
+    const response = await fetch(`${backend_base_url}/article/${articleId}/bookmark/`, {
+        method: 'POST',   
+        headers: {
+            "Authorization": `Bearer ${token}`
+        }
+    })
+
+    if(response.status == 200) {
+        console.log(response)
+        alert("북마크 완료!")
+        location.reload();
+    } else {
+        alert(response.status)
+    }
+}
+
+
 // async function getComments(articleId){
 //     const response = await fetch(`${backend_base_url}/article/${articleId}/comment/`)
 
