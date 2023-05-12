@@ -17,26 +17,29 @@ async function loadArticles(pageNum){
         newBtn.setAttribute("id", article.id)
         newBtn.setAttribute("onclick", `articleDetail(${article.id})`)
 
+        const newTitle = document.createElement("h5")
+        newTitle.setAttribute("class", "mb-1")
+        newTitle.innerText = article.title
+        newBtn.appendChild(newTitle)
+
         const newDiv = document.createElement("div")
+        const newDivChild = document.createElement("div")
         newDiv.setAttribute("class", "d-flex w-100 justify-content-between")
         newBtn.appendChild(newDiv)
 
-        const newTitle = document.createElement("h5")
         const newDate = document.createElement("small")
-        newTitle.setAttribute("class", "mb-1")
-        newTitle.innerText = article.title
-        newDate.innerText = article.created_at
-        newDiv.appendChild(newTitle)
-        newDiv.appendChild(newDate)
-
-        const newContent = document.createElement("p")
-        newContent.setAttribute("class", "mb-1")
-        newContent.innerText = article.content
-        newBtn.appendChild(newContent)
-
         const newAuthor = document.createElement("small")
+        const newLikeCount = document.createElement("small")
+        const newCommentCount = document.createElement("small")
+        newDate.innerText = article.created_at
         newAuthor.innerText = article.author
-        newBtn.appendChild(newAuthor)
+        newLikeCount.innerText = `좋아요 수 : ${article.likes_count} `
+        newCommentCount.innerText = `댓글 수 : ${article.likes_count} `
+        newDiv.appendChild(newAuthor)
+        newDivChild.appendChild(newLikeCount)
+        newDivChild.appendChild(newCommentCount)
+        newDivChild.appendChild(newDate)
+        newDiv.appendChild(newDivChild)
 
         article_list.append(newBtn)
     });
