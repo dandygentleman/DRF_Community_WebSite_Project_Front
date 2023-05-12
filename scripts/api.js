@@ -240,7 +240,7 @@ async function deleteArticle(articleId){
         alert(response.status)
     }
 }
-
+ 
 
 async function likeArticle(articleId){
     let token = localStorage.getItem("access")
@@ -253,8 +253,8 @@ async function likeArticle(articleId){
     })
 
     if(response.status == 200) {
-        console.log(response)
-        alert("좋아요 완료!")
+        response_json = await response.json()
+        alert(response_json.message)
         location.reload();
     } else {
         alert(response.status)
@@ -273,8 +273,8 @@ async function bookmarkArticle(articleId){
     })
 
     if(response.status == 200) {
-        console.log(response)
-        alert("북마크 완료!")
+        response_json = await response.json()
+        alert(response_json.message)
         location.reload();
     } else {
         alert(response.status)
