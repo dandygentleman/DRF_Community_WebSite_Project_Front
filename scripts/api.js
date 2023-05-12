@@ -158,22 +158,19 @@ async function getArticles(pageNum){
 async function postArticle(){
     const title = document.getElementById("title").value
     const content = document.getElementById("content").value
-    // const image = document.getElementById("image").files[0]
-
-    const formdata = new FormData();
-
-    formdata.append('title', title)
-    formdata.append('content', content)
-    // formdata.append('image', image)
 
     let token = localStorage.getItem("access")
 
     const response = await fetch(`${backend_base_url}/article/`, {
-        method: 'POST',
         headers: {
+            'content-type': 'application/json',
             "Authorization": `Bearer ${token}`
         },
-        body: formdata
+        method: 'POST',
+        body: JSON.stringify({
+            "title": title,
+            "content": content
+        })
     })
 
     if(response.status == 201) {
