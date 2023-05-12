@@ -6,7 +6,6 @@ async function loadArticle(articleId){
 
 
     const articleTitle = document.getElementById("title")
-    // const articleImage = document.getElementById("article-image")
     const articleContent = document.getElementById("content")
 
     articleTitle.setAttribute("value",response.title)
