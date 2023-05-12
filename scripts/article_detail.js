@@ -48,10 +48,29 @@ async function loadArticle(articleId){
 // }
 
 
+async function injectUpdateDeleteButton(articleId){
+    let buttonArea = document.getElementById("button-area")
+    let updateBtn = document.createElement("a")
+    updateBtn.setAttribute("class","btn btn-outline-secondary")
+    updateBtn.setAttribute("href",`/article_update.html?article_id=${articleId}`)
+    updateBtn.innerText = "수정"
+
+    let deleteBtn = document.createElement("button")
+    deleteBtn.setAttribute("type","button")
+    deleteBtn.setAttribute("class","btn btn-outline-danger")
+    deleteBtn.setAttribute("onclick",`deleteArticle(${articleId})`)
+    deleteBtn.innerText = "삭제"
+
+    buttonArea.append(updateBtn)
+    buttonArea.append(deleteBtn)
+}
+
+
 window.onload = async function() {
     const urlParams = new URLSearchParams(window.location.search);
     articleId = urlParams.get('article_id');
 
     await loadArticle(articleId);
+    await injectUpdateDeleteButton(articleId);
     // await loadComments(articleId);
 }

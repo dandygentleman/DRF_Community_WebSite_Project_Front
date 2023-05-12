@@ -24,7 +24,7 @@ async function injectNavbar(){
 
         let articleCreateLink = document.createElement("a")
         articleCreateLink.setAttribute("class","nav-link")
-        articleCreateLink.setAttribute("href","/ariticle_create.html")
+        articleCreateLink.setAttribute("href","/article_create.html")
         articleCreateLink.innerHTML = "글 작성"
 
         articleCreateLi.appendChild(articleCreateLink)

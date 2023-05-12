@@ -197,6 +197,53 @@ async function getArticle(articleId){
 }
 
 
+async function updateArticle(){
+    const urlParams = new URLSearchParams(window.location.search);
+    articleId = urlParams.get('article_id');
+
+    const title = document.getElementById("title").value
+    const content = document.getElementById("content").value
+
+    let token = localStorage.getItem("access")
+    
+    const response = await fetch(`${backend_base_url}/article/${articleId}/`, {
+        headers: {
+            'content-type': 'application/json',
+            "Authorization": `Bearer ${token}`
+        },
+        method: 'PUT',
+        body: JSON.stringify({
+            "title": title,
+            "content": content
+        })
+    })
+
+    if(response.status == 200) {
+        alert("수정 완료!")
+        window.location.replace(`${frontend_base_url}/`);
+    } else {
+        alert(response.status)
+    }
+}
+
+
+async function deleteArticle(articleId){
+    let token = localStorage.getItem("access")
+    const response = await fetch(`${backend_base_url}/article/${articleId}/`, {
+        method: 'DELETE',   
+        headers: {
+            "Authorization": `Bearer ${token}`
+        }
+    })
+
+    if(response.status == 204) {
+        alert("삭제 완료!")
+        window.location.replace(`${frontend_base_url}/`);
+    } else {
+        alert(response.status)
+    }
+}
+
 // async function getComments(articleId){
 //     const response = await fetch(`${backend_base_url}/article/${articleId}/comment/`)
 
