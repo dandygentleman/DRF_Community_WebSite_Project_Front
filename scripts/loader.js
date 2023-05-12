@@ -26,9 +26,19 @@ async function injectNavbar(){
         articleCreateLink.setAttribute("class","nav-link")
         articleCreateLink.setAttribute("href","/article_create.html")
         articleCreateLink.innerHTML = "글 작성"
-
         articleCreateLi.appendChild(articleCreateLink)
+
+        let feedPageLi = document.createElement("li")
+        feedPageLi.setAttribute("class","nav-item")
+
+        let feedPageLink = document.createElement("a")
+        feedPageLink.setAttribute("class","nav-link")
+        feedPageLink.setAttribute("href","/feedpage.html")
+        feedPageLink.innerHTML = "피드페이지"
+        feedPageLi.appendChild(feedPageLink)
+
         navbarLeft.append(articleCreateLi)
+        navbarLeft.append(feedPageLi)
 
         let navbarRight = document.getElementById("navbar-right")
         let logoutLi = document.createElement("li")
@@ -45,7 +55,7 @@ async function injectNavbar(){
 
         let mypageLink = document.createElement("a")
         mypageLink.setAttribute("class","nav-link")
-        mypageLink.setAttribute("href","/mypage.html")
+        mypageLink.setAttribute("href",`/mypage.html?user_id=${payload_parse.user_id}`)
         mypageLink.innerHTML = "마이페이지"
         mypageLi.appendChild(mypageLink)
 

@@ -3,14 +3,14 @@ function articleDetail(article_id){
 }
 
 
-async function loadArticles(pageNum){
-    articles = await getArticles(pageNum)
+async function loadFeedArticles(pageNum){
+    articles = await getFeedArticles(pageNum)
     console.log(articles)
 
     const article_list = document.getElementById("article-list")
     article_list.innerHTML = ""
 
-    articles.results.forEach(article => {
+    articles.forEach(article => {
         const newBtn = document.createElement("button")
         newBtn.setAttribute("type", "button")
         newBtn.setAttribute("class", "list-group-item list-group-item-action")
@@ -54,7 +54,7 @@ async function loadArticles(pageNum){
         newPageBtn.setAttribute("class", "page-item")
         const newPageLink = document.createElement("a")
         newPageLink.setAttribute("class", "page-link")
-        newPageLink.setAttribute("onclick", `loadArticles(${i})`)
+        newPageLink.setAttribute("onclick", `loadFeedArticles(${i})`)
         newPageLink.innerText = i
         newPageBtn.appendChild(newPageLink)
         pagination.append(newPageBtn)
@@ -63,5 +63,5 @@ async function loadArticles(pageNum){
 
 
 window.onload = async function(){
-    await loadArticles(1);
+    await loadFeedArticles(1);
 }
