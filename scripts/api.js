@@ -375,20 +375,6 @@ async function getComments(articleId){
 }
 
 
-// async function getComments(articleId){
-//     const response = await fetch(`${backend_base_url}/article/${articleId}/comment/`)
-
-//     if(response.status == 200) {
-//         response_json = await response.json()
-//         return response_json
-//     } else {
-//         alert(response.status)
-//     }
-// }
-
-
-
-
 async function getProfile(userId){
     let token = localStorage.getItem("access")
     const response = await fetch(`${backend_base_url}/user/${userId}/`)
@@ -423,6 +409,7 @@ async function followToggle(userId){
         console.log(response.body)
         const response_json = await response.json()
         alert(response_json.message)
+        location.reload()
     }else{
         alert("failed")
     }
