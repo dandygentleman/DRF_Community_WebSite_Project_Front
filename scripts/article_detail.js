@@ -1,4 +1,5 @@
 let articleId
+let authorId
 
 
 async function loadArticle(articleId){
@@ -9,6 +10,8 @@ async function loadArticle(articleId){
 
     articleTitle.innerText = response.title
     articleContent.innerText = response.content
+
+    authorId = response.author_id
 }
 
 
@@ -44,6 +47,11 @@ async function submitComment(){
 async function injectButton(articleId){
     let buttonArea = document.getElementById("button-area")
 
+    let authorBtn = document.createElement("a")
+    authorBtn.setAttribute("class","btn btn-outline-primary")
+    authorBtn.setAttribute("href",`/profile.html?user_id=${authorId}`)
+    authorBtn.innerText = "작성자"
+
     let likeBtn = document.createElement("button")
     likeBtn.setAttribute("type","button")
     likeBtn.setAttribute("class","btn btn-outline-warning")
@@ -67,6 +75,7 @@ async function injectButton(articleId){
     deleteBtn.setAttribute("onclick",`deleteArticle(${articleId})`)
     deleteBtn.innerText = "삭제"
 
+    buttonArea.append(authorBtn)
     buttonArea.append(likeBtn)
     buttonArea.append(bookmarkBtn)
     buttonArea.append(updateBtn)
