@@ -37,8 +37,18 @@ async function injectNavbar(){
         feedPageLink.innerHTML = "피드페이지"
         feedPageLi.appendChild(feedPageLink)
 
+        let bookmarkPageLi = document.createElement("li")
+        bookmarkPageLi.setAttribute("class","nav-item")
+
+        let bookmarkPageLink = document.createElement("a")
+        bookmarkPageLink.setAttribute("class","nav-link")
+        bookmarkPageLink.setAttribute("href","/bookmarkpage.html")
+        bookmarkPageLink.innerHTML = "북마크"
+        bookmarkPageLi.appendChild(bookmarkPageLink)
+
         navbarLeft.append(articleCreateLi)
         navbarLeft.append(feedPageLi)
+        navbarLeft.append(bookmarkPageLi)
 
         let navbarRight = document.getElementById("navbar-right")
         let logoutLi = document.createElement("li")
