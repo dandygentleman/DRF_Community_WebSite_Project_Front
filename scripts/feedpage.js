@@ -10,7 +10,7 @@ async function loadFeedArticles(pageNum){
     const article_list = document.getElementById("article-list")
     article_list.innerHTML = ""
 
-    articles.forEach(article => {
+    articles.results.forEach(article => {
         const newBtn = document.createElement("button")
         newBtn.setAttribute("type", "button")
         newBtn.setAttribute("class", "list-group-item list-group-item-action")
