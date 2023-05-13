@@ -38,6 +38,4 @@ window.onload = async function() {
 
     await loadProfile(userId);
     await followButton(userId);
-
-    // await loadComments(articleId);
 }
