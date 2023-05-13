@@ -364,12 +364,7 @@ async function getBookmarkArticles(){
 
 async function getComments(articleId){
     let token = localStorage.getItem("access")
-    const response = await fetch(`${backend_base_url}/article/${articleId}/comment/`, {
-        headers: {
-            "Authorization": `Bearer ${token}`
-        },
-        method: 'GET'
-    })
+    const response = await fetch(`${backend_base_url}/article/${articleId}/comment/`)
     
     if(response.status == 200) {
         response_json = await response.json()
