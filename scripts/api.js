@@ -445,6 +445,8 @@ async function followToggle(userId){
         alert(response_json.message)
     }else{
         alert("failed")
+    }
+}
 
 async function postComment(articleId, newComment){
     let token = localStorage.getItem("access")
