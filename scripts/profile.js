@@ -1,4 +1,4 @@
-async function loadProfile(userId,pageNum){
+async function loadProfile(userId){
     const response = await getProfile(userId);
 
     const username = document.getElementById("userinfo")
@@ -12,6 +12,9 @@ async function loadProfile(userId,pageNum){
     <p>
         팔로워 수: ${response.followers} 팔로잉 수: ${response.following}
     </p>`
+    
+}
+async function loadProfileArticles(userId,pageNum){
     const articles = await getProfileArticle(userId,pageNum)
     const article_list = document.getElementById("article-list")
     article_list.innerHTML = ""
@@ -59,14 +62,13 @@ async function loadProfile(userId,pageNum){
         newPageBtn.setAttribute("class", "page-item")
         const newPageLink = document.createElement("a")
         newPageLink.setAttribute("class", "page-link")
-        newPageLink.setAttribute("onclick", `loadProfile(${userId},${i})`)
+        newPageLink.setAttribute("onclick", `loadProfileArticles(${userId},${i})`)
         newPageLink.innerText = i
         newPageBtn.appendChild(newPageLink)
         pagination.append(newPageBtn)
     }
 
 }
-
 async function followButton(userId){
     const buttonarea=document.getElementById('button_div')
     buttonarea.innerHTML=`<button onclick="followToggle(${userId})">팔로우/팔로우 취소</button>`
@@ -75,6 +77,7 @@ async function followButton(userId){
 window.onload = async function() {
     const urlParams = new URLSearchParams(window.location.search);
     let userId = urlParams.get('user_id');
-    await loadProfile(userId,1);
+    await loadProfile(userId);
+    await loadProfileArticles(userId,1);
     await followButton(userId);
 }
