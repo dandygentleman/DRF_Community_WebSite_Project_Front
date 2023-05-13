@@ -28,48 +28,30 @@
         <div class="container text-center w-50">
             <h1 id="article-title"></h1>
             <div id="article-content"></div>
-            <!-- <div class="row row-cols-1 row-cols-md-2" id="article">
-                <div class="col" id="article-image"></div>
-                <div class="col align-self-center"></div>
-            </div> -->
             <div id="button-area"></div>
         </div>
         <!-- 댓글 리스팅 영역 -->
-        <!-- <div class="container mt-5" id="comment-list">
-            <div class="d-flex">
-                <div class="flex-shrink-0">
-                    <img
-                        src="https://as1.ftcdn.net/v2/jpg/00/64/67/80/1000_F_64678017_zUpiZFjj04cnLri7oADnyMH0XBYyQghG.jpg"
-                        alt="..."
-                        width="50"
-                        height="50"
-                    />
-                </div>
-                <h5>댓글작성자</h5>
-                <div class="flex-grow-1 ms-3">댓글내용</div>
-            </div>
-        </div> -->
+        <div class="container w-50 mt-5">
+            <h5>댓글</h5>
+            <ul class="list-group list-group-flush" id="comment-list">
+                <li class="list-group-item">
+                    <h5>댓글작성자</h5>
+                    An item
+                </li>
+            </ul>
+        </div>
         <!-- 댓글 작성 영역 -->
-        <!-- <div class="container mt-5">
-            <div class="row">
-                <div class="col-7">
-                    <input
-                        type="text"
-                        id="new-comment"
-                        class="form-control"
-                        id="title"
-                    />
-                </div>
-                <div class="col">
-                    <button
-                        type="button"
-                        class="btn btn-outline-primary"
-                        onclick="submitComment()"
-                    >
-                        등록
-                    </button>
-                </div>
+        <div class="container w-50 mt-5">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" id="comment-input" />
+                <button
+                    class="btn btn-outline-primary"
+                    type="button"
+                    onclick="submitComment()"
+                >
+                    댓글작성
+                </button>
             </div>
-        </div> -->
+        </div>
     </body>
 </html>

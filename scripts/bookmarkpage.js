@@ -34,7 +34,7 @@ async function loadBookmarkArticles(pageNum){
         newDate.innerText = article.created_at
         newAuthor.innerText = article.author
         newLikeCount.innerText = `좋아요 수 : ${article.likes_count} `
-        newCommentCount.innerText = `댓글 수 : ${article.likes_count} `
+        newCommentCount.innerText = `댓글 수 : ${article.comment_count} `
         newDiv.appendChild(newAuthor)
         newDivChild.appendChild(newLikeCount)
         newDivChild.appendChild(newCommentCount)
