@@ -75,7 +75,6 @@ async function followButton(userId){
 window.onload = async function() {
     const urlParams = new URLSearchParams(window.location.search);
     let userId = urlParams.get('user_id');
-    let pageNum = urlParams.get('page') | 1
-    await loadProfile(userId,pageNum);
+    await loadProfile(userId,1);
     await followButton(userId);
 }
