@@ -142,6 +142,50 @@ async function handlePasswordChange() {
 }
 
 
+async function getProfile(userId){
+    let token = localStorage.getItem("access")
+    const response = await fetch(`${backend_base_url}/user/${userId}/`, {
+        headers: {
+            "Authorization": `Bearer ${token}`
+        },
+        method: 'GET'
+})
+
+    if(response.status==200){
+        const response_json = await response.json()
+        return response_json
+    }else{
+        alert("불러오는데 실패했습니다")
+    }
+
+}
+
+
+async function changeProfile(userId){
+    const image = document.getElementById("image").files[0]
+    const bio = document.getElementById("bio").value
+
+    const formdata = new FormData();
+
+    if (image){
+        formdata.append('image',image)
+    }
+    formdata.append('bio',bio)
+
+    let token = localStorage.getItem("access")
+
+    const response = await fetch(`${backend_base_url}/user/${userId}/`, {
+        headers: {
+            "Authorization": `Bearer ${token}`
+        },
+        method: 'PUT',
+        body: formdata
+    })
+
+    return response
+}
+
+
 async function getArticles(pageNum){
     const response = await fetch(`${backend_base_url}/article/?page=${pageNum}`)
 
