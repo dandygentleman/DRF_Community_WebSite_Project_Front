@@ -387,27 +387,7 @@ async function getComments(articleId){
 // }
 
 
-// async function postComment(articleId, newComment){
-//     let token = localStorage.getItem("access")
 
-//     const response = await fetch(`${backend_base_url}/article/${articleId}/comment/`, {
-//         method: 'POST',
-//         headers: {
-//             'content-type': 'application/json',
-//             "Authorization": `Bearer ${token}`
-//         },
-//         body: JSON.stringify({
-//             "content": newComment,
-//         })
-//     })
-
-//     if(response.status == 200) {
-//         response_json = await response.json()
-//         return response_json
-//     } else {
-//         alert(response.status)
-//     }
-// }
 
 async function getProfile(userId){
     let token = localStorage.getItem("access")
@@ -419,9 +399,9 @@ async function getProfile(userId){
         alert("불러오는데 실패했습니다")
     }
 }
-async function getProfileArticle(userId){
+async function getProfileArticle(userId,pageNum){
     let token = localStorage.getItem("access")
-    const response = await fetch(`${backend_base_url}/user/${userId}/article/`)
+    const response = await fetch(`${backend_base_url}/user/${userId}/article/?page=${pageNum}`)
     if(response.status==200){
         console.log(response.body)
         const response_json = await response.json()
@@ -445,6 +425,8 @@ async function followToggle(userId){
         alert(response_json.message)
     }else{
         alert("failed")
+    }
+}
 
 async function postComment(articleId, newComment){
     let token = localStorage.getItem("access")
