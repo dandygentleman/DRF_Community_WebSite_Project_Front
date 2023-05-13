@@ -3,8 +3,8 @@ function articleDetail(article_id){
 }
 
 
-async function loadArticles(pageNum){
-    articles = await getArticles(pageNum)
+async function loadBookmarkArticles(pageNum){
+    articles = await getBookmarkArticles(pageNum)
     console.log(articles)
 
     const article_list = document.getElementById("article-list")
@@ -54,7 +54,7 @@ async function loadArticles(pageNum){
         newPageBtn.setAttribute("class", "page-item")
         const newPageLink = document.createElement("a")
         newPageLink.setAttribute("class", "page-link")
-        newPageLink.setAttribute("onclick", `loadArticles(${i})`)
+        newPageLink.setAttribute("onclick", `loadBookmarkArticles(${i})`)
         newPageLink.innerText = i
         newPageBtn.appendChild(newPageLink)
         pagination.append(newPageBtn)
@@ -63,5 +63,5 @@ async function loadArticles(pageNum){
 
 
 window.onload = async function(){
-    await loadArticles(1);
+    await loadBookmarkArticles(1);
 }

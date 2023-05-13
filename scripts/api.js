@@ -142,6 +142,50 @@ async function handlePasswordChange() {
 }
 
 
+async function getProfile(userId){
+    let token = localStorage.getItem("access")
+    const response = await fetch(`${backend_base_url}/user/${userId}/`, {
+        headers: {
+            "Authorization": `Bearer ${token}`
+        },
+        method: 'GET'
+})
+
+    if(response.status==200){
+        const response_json = await response.json()
+        return response_json
+    }else{
+        alert("불러오는데 실패했습니다")
+    }
+
+}
+
+
+async function changeProfile(userId){
+    const image = document.getElementById("image").files[0]
+    const bio = document.getElementById("bio").value
+
+    const formdata = new FormData();
+
+    if (image){
+        formdata.append('image',image)
+    }
+    formdata.append('bio',bio)
+
+    let token = localStorage.getItem("access")
+
+    const response = await fetch(`${backend_base_url}/user/${userId}/`, {
+        headers: {
+            "Authorization": `Bearer ${token}`
+        },
+        method: 'PUT',
+        body: formdata
+    })
+
+    return response
+}
+
+
 async function getArticles(pageNum){
     const response = await fetch(`${backend_base_url}/article/?page=${pageNum}`)
 
@@ -158,22 +202,19 @@ async function getArticles(pageNum){
 async function postArticle(){
     const title = document.getElementById("title").value
     const content = document.getElementById("content").value
-    // const image = document.getElementById("image").files[0]
-
-    const formdata = new FormData();
-
-    formdata.append('title', title)
-    formdata.append('content', content)
-    // formdata.append('image', image)
 
     let token = localStorage.getItem("access")
 
     const response = await fetch(`${backend_base_url}/article/`, {
-        method: 'POST',
         headers: {
+            'content-type': 'application/json',
             "Authorization": `Bearer ${token}`
         },
-        body: formdata
+        method: 'POST',
+        body: JSON.stringify({
+            "title": title,
+            "content": content
+        })
     })
 
     if(response.status == 201) {
@@ -243,6 +284,96 @@ async function deleteArticle(articleId){
         alert(response.status)
     }
 }
+ 
+
+async function likeArticle(articleId){
+    let token = localStorage.getItem("access")
+
+    const response = await fetch(`${backend_base_url}/article/${articleId}/like/`, {
+        method: 'POST',   
+        headers: {
+            "Authorization": `Bearer ${token}`
+        }
+    })
+
+    if(response.status == 200) {
+        response_json = await response.json()
+        alert(response_json.message)
+        location.reload();
+    } else {
+        alert(response.status)
+    }
+}
+
+
+async function bookmarkArticle(articleId){
+    let token = localStorage.getItem("access")
+
+    const response = await fetch(`${backend_base_url}/article/${articleId}/bookmark/`, {
+        method: 'POST',   
+        headers: {
+            "Authorization": `Bearer ${token}`
+        }
+    })
+
+    if(response.status == 200) {
+        response_json = await response.json()
+        alert(response_json.message)
+        location.reload();
+    } else {
+        alert(response.status)
+    }
+}
+
+
+async function getFeedArticles(){
+    let token = localStorage.getItem("access")
+    const response = await fetch(`${backend_base_url}/article/feed/`, {
+        headers: {
+            "Authorization": `Bearer ${token}`
+        },
+        method: 'GET'
+    })
+
+    if(response.status==200){
+        const response_json = await response.json()
+        return response_json
+    }else{
+        alert("불러오는데 실패했습니다")
+    }
+}
+
+
+async function getBookmarkArticles(){
+    let token = localStorage.getItem("access")
+    const response = await fetch(`${backend_base_url}/article/bookmark_list/`, {
+        headers: {
+            "Authorization": `Bearer ${token}`
+        },
+        method: 'GET'
+    })
+
+    if(response.status==200){
+        const response_json = await response.json()
+        return response_json
+    }else{
+        alert("불러오는데 실패했습니다")
+    }
+}
+
+
+async function getComments(articleId){
+    let token = localStorage.getItem("access")
+    const response = await fetch(`${backend_base_url}/article/${articleId}/comment/`)
+    
+    if(response.status == 200) {
+        response_json = await response.json()
+        return response_json
+    } else {
+        alert(response.status)
+    }
+}
+
 
 // async function getComments(articleId){
 //     const response = await fetch(`${backend_base_url}/article/${articleId}/comment/`)
@@ -314,5 +445,27 @@ async function followToggle(userId){
         alert(response_json.message)
     }else{
         alert("failed")
+
+async function postComment(articleId, newComment){
+    let token = localStorage.getItem("access")
+
+    const response = await fetch(`${backend_base_url}/article/${articleId}/comment/`, {
+        method: 'POST',
+        headers: {
+            'content-type': 'application/json',
+            "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify({
+            "content": newComment,
+        })
+    })
+
+    if(response.status == 201) {
+        response_json = await response.json()
+        alert(response_json.message)
+        return response_json
+    } else {
+        alert(response.status)
+
     }
 }

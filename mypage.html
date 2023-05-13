@@ -72,5 +72,27 @@
                 </button>
             </div>
         </div>
+        <!-- 프로필 관리 영역 -->
+        <div class="container w-50">
+            <h2 class="text-center">프로필 관리</h2>
+            <!-- 프로필 보기 영역 -->
+            <div class="mb-3" id="profile"></div>
+            <!-- 프로필 변경 영역 -->
+            <div class="mb-3">
+                <label for="image" class="form-label">image</label>
+                <input class="form-control" type="file" id="image" multiple />
+            </div>
+            <div class="mb-3">
+                <label for="bio" class="form-label">bio</label>
+                <textarea class="form-control" id="bio" rows="3"></textarea>
+            </div>
+            <button
+                type="button"
+                class="btn btn-outline-primary"
+                onclick="changeProfileButton()"
+            >
+                제출
+            </button>
+        </div>
     </body>
 </html>

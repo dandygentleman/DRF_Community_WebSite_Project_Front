@@ -4,10 +4,10 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>수정하기</title>
+        <title>피드페이지</title>
         <!-- JS파일 임포트 부분 -->
         <script src="/scripts/api.js"></script>
-        <script src="/scripts/article_update.js"></script>
+        <script src="/scripts/feedpage.js"></script>
         <script src="/scripts/loader.js"></script>
         <!-- 부트스트랩 임포트 부분 -->
         <link
@@ -22,30 +22,15 @@
             crossorigin="anonymous"
         ></script>
     </head>
-    <header></header>
     <body>
-        <!-- 아티클 작성 입력 영역 -->
+        <header></header>
+        <!-- 아티클 리스팅 영역 -->
         <div class="container w-50">
-            <h2 class="text-center">글 수정</h2>
-            <div class="mb-3">
-                <label for="title" class="form-label">title</label>
-                <input type="text" class="form-control" id="title" />
+            <h2 class="text-center">피드 페이지</h2>
+            <div class="list-group" id="article-list"></div>
+            <div class="mt-3">
+                <ul class="pagination" id="pagination"></ul>
             </div>
-            <div class="mb-3">
-                <label for="content" class="form-label">content</label>
-                <textarea class="form-control" id="content" rows="3"></textarea>
-            </div>
-            <div class="mb-3">
-                <label for="image" class="form-label">image</label>
-                <input class="form-control" type="file" id="image" multiple />
-            </div>
-            <button
-                type="button"
-                class="btn btn-outline-secondary"
-                onclick="updateArticle()"
-            >
-                수정
-            </button>
         </div>
     </body>
 </html>
