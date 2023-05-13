@@ -385,9 +385,9 @@ async function getProfile(userId){
         alert("불러오는데 실패했습니다")
     }
 }
-async function getProfileArticle(userId){
+async function getProfileArticle(userId,pageNum){
     let token = localStorage.getItem("access")
-    const response = await fetch(`${backend_base_url}/user/${userId}/article/`)
+    const response = await fetch(`${backend_base_url}/user/${userId}/article/?page=${pageNum}`)
     if(response.status==200){
         console.log(response.body)
         const response_json = await response.json()
