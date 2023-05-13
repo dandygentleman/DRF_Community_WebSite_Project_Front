@@ -299,3 +299,20 @@ async function getProfileArticle(userId){
         alert("불러오는데 실패했습니다")
     }
 }
+
+async function followToggle(userId){
+    let token = localStorage.getItem("access")
+    const response = await fetch(`${backend_base_url}/user/${userId}/follow/`, {
+        method: 'POST',   
+        headers: {
+            "Authorization": `Bearer ${token}`
+        }
+    })
+    if(response.status==200 || response.status==400){
+        console.log(response.body)
+        const response_json = await response.json()
+        alert(response_json.message)
+    }else{
+        alert("failed")
+    }
+}

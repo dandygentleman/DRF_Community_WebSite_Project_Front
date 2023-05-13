@@ -27,12 +27,17 @@ async function loadProfile(userId){
     
 }
 
-
+async function followButton(userId){
+    const buttonarea=document.getElementById('button_div')
+    buttonarea.innerHTML=`<button onclick="followToggle(${userId})">팔로우/팔로우 취소</button>`
+    
+}
 window.onload = async function() {
     const urlParams = new URLSearchParams(window.location.search);
     userId = urlParams.get('user_id');
 
     await loadProfile(userId);
-    await injectUpdateDeleteButton(articleId);
+    await followButton(userId);
+
     // await loadComments(articleId);
 }
