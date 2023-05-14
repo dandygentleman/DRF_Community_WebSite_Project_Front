@@ -28,9 +28,13 @@ async function refresh() {
         })
     })
     if (response.status == 401) {
+        alert("로그아웃되었습니다 다시 로그인해주세요")
+        localStorage.removeItem("payload")
+        localStorage.removeItem("access")
+        localStorage.removeItem("refresh")
+        window.location.href=`${frontend_base_url}`
         return null
     }
-    console.log("adfadf")
     const response_json = await response.json();
     const jsonPayload = await parse_payload(response_json.access);
     localStorage.setItem("payload", jsonPayload);
@@ -236,7 +240,6 @@ async function postArticle(){
     const content = document.getElementById("content").value
 
     let token = await get_access_token()
-    console.log(token)
     const response = await fetch(`${backend_base_url}/article/`, {
         headers: {
             'content-type': 'application/json',
@@ -447,7 +450,6 @@ async function followToggle(userId){
 
 async function postComment(articleId, newComment){
     let token = await get_access_token()
-    console.log(token)
     const response = await fetch(`${backend_base_url}/article/${articleId}/comment/`, {
         method: 'POST',
         headers: {
