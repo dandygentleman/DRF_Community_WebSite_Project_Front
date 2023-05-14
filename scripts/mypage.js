@@ -24,14 +24,11 @@ async function handlePasswordChangeButton(){
 
 async function loadProfile(userId){
     const response = await getProfile(userId);
-    console.log(response)
-    console.log(response.profile_data)
 
-    const profileImage = document.getElementById("image")
+    const profileImage = document.getElementById("profile_image")
     const profileBio = document.getElementById("bio")
-
-    profileImage.innerHTML = response.profile_data.bio
-    profileBio.innerText = response.profile_data.bio
+    profileBio.innerText = response.bio
+    profileImage.innerHTML=`<img class="img-fluid" src="${backend_base_url}${response.image}">`
 }
 
 
