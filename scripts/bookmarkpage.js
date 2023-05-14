@@ -5,7 +5,6 @@ function articleDetail(article_id){
 
 async function loadBookmarkArticles(pageNum){
     articles = await getBookmarkArticles(pageNum)
-    console.log(articles)
 
     const article_list = document.getElementById("article-list")
     article_list.innerHTML = ""

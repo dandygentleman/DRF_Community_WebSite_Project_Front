@@ -17,7 +17,6 @@ async function loadArticle(articleId){
 
 async function loadComments(articleId){
     const response = await getComments(articleId);
-    console.log(response)
 
     const commentList = document.getElementById("comment-list")
     commentList.innerHTML = ""
@@ -37,7 +36,6 @@ async function submitComment(){
     const commentElement = document.getElementById("comment-input")
     const newComment = commentElement.value
     const response = await postComment(articleId, newComment)
-    console.log(response)
     commentElement.value = ""
 
     loadComments(articleId)

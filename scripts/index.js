@@ -5,7 +5,6 @@ function articleDetail(article_id){
 
 async function loadArticles(pageNum){
     articles = await getArticles(pageNum)
-    console.log(articles)
 
     const article_list = document.getElementById("article-list")
     article_list.innerHTML = ""
