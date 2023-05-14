@@ -7,16 +7,21 @@ async function loadArticle(articleId){
 
     const articleTitle = document.getElementById("article-title")
     const articleContent = document.getElementById("article-content")
-
+    const articleAuthor = document.getElementById("article-author")
+    const likesCount = document.getElementById("likes-count")
     articleTitle.innerText = response.title
     articleContent.innerText = response.content
-
+    articleAuthor.innerText = response.author
+    likesCount.innerText = response.likes_count
     authorId = response.author_id
+    const commentCount=document.getElementById("comment-count")
+    commentCount.innerText=`댓글 ${response.comment_count}개`
 }
 
 
 async function loadComments(articleId){
     const response = await getComments(articleId);
+    
 
     const commentList = document.getElementById("comment-list")
     commentList.innerHTML = ""
