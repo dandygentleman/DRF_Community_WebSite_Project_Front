@@ -6,13 +6,63 @@ window.onload = () => {
     console.log("로딩되었음")
 }
 
+async function parse_payload(token) {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+    return jsonPayload
+}
+
+async function refresh() {
+    const refresh_token = localStorage.getItem("refresh")
+    if (refresh_token == null) {
+        return null
+    }
+    const response = await fetch(`${backend_base_url}/user/refresh/`, {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+            "refresh": refresh_token
+        })
+    })
+    if (response.status == 401) {
+        return null
+    }
+    console.log("adfadf")
+    const response_json = await response.json();
+    const jsonPayload = await parse_payload(response_json.access);
+    localStorage.setItem("payload", jsonPayload);
+    localStorage.setItem("access", response_json.access);
+    return localStorage.getItem("access")
+}
+async function get_access_token() {
+    const token = localStorage.getItem('access')
+    if (token == null) {
+
+        return null
+    }
+    else {
+        const response = await fetch(`${backend_base_url}/user/verify/`, {
+            method: "POST",
+            headers: { "content-type": "application/json" },
+            body: JSON.stringify({ "token": token })
+        })
+        if (response.status == 200) {
+            return token
+        }
+        else {
+            return await refresh()
+        }
+    }
+}
 
 async function handleSignup() {
     const username = document.getElementById("username").value
     const password = document.getElementById("password").value
     const password2 = document.getElementById("password2").value
     const email = document.getElementById("email").value
-    console.log(username, password, password2, email)
 
     const response = await fetch(`${backend_base_url}/user/sign/`, {
         headers: {
@@ -34,7 +84,6 @@ async function handleSignup() {
 async function handleLogin() {
     const username = document.getElementById("username").value
     const password = document.getElementById("password").value
-    console.log(username, password)
 
     const response = await fetch(`${backend_base_url}/user/token/`, {
         headers: {
@@ -50,16 +99,10 @@ async function handleLogin() {
     if(response.status == 200){
         const response_json = await response.json()
 
-        console.log(response_json)
 
         localStorage.setItem("access", response_json.access);
         localStorage.setItem("refresh", response_json.refresh);
-
-        const base64Url = response_json.access.split('.')[1];
-        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
-        const jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
-            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-        }).join(''));
+        const jsonPayload = await parse_payload(response_json.access);
 
         localStorage.setItem("payload", jsonPayload);
         alert("환영합니다.")
@@ -71,17 +114,6 @@ async function handleLogin() {
 
 }
 
-
-async function handleMock() {
-    const response = await fetch(`${backend_base_url}/users/mock/`, {
-        headers: {
-            "Authorization": "Bearer " + localStorage.getItem("access")
-        },
-        method: 'GET',
-    })
-
-    console.log(response)
-}
 
 
 function handleLogout() {
@@ -123,7 +155,7 @@ async function handlePasswordChange() {
     const currentPassword = document.getElementById("current-password").value
     const newpassword = document.getElementById("new-password").value
     const newpassword2 = document.getElementById("new-password2").value
-    let token = localStorage.getItem("access")
+    let token = await get_access_token()
 
     const response = await fetch(`${backend_base_url}/user/sign/`, {
         headers: {
@@ -143,7 +175,7 @@ async function handlePasswordChange() {
 
 
 async function getProfile(userId){
-    let token = localStorage.getItem("access")
+    let token = await get_access_token()
     const response = await fetch(`${backend_base_url}/user/${userId}/`, {
         headers: {
             "Authorization": `Bearer ${token}`
@@ -172,7 +204,7 @@ async function changeProfile(userId){
     }
     formdata.append('bio',bio)
 
-    let token = localStorage.getItem("access")
+    let token = await get_access_token()
 
     const response = await fetch(`${backend_base_url}/user/${userId}/`, {
         headers: {
@@ -203,8 +235,8 @@ async function postArticle(){
     const title = document.getElementById("title").value
     const content = document.getElementById("content").value
 
-    let token = localStorage.getItem("access")
-
+    let token = await get_access_token()
+    console.log(token)
     const response = await fetch(`${backend_base_url}/article/`, {
         headers: {
             'content-type': 'application/json',
@@ -245,7 +277,7 @@ async function updateArticle(){
     const title = document.getElementById("title").value
     const content = document.getElementById("content").value
 
-    let token = localStorage.getItem("access")
+    let token = await get_access_token()
     
     const response = await fetch(`${backend_base_url}/article/${articleId}/`, {
         headers: {
@@ -269,7 +301,7 @@ async function updateArticle(){
 
 
 async function deleteArticle(articleId){
-    let token = localStorage.getItem("access")
+    let token = await get_access_token()
     const response = await fetch(`${backend_base_url}/article/${articleId}/`, {
         method: 'DELETE',   
         headers: {
@@ -287,7 +319,7 @@ async function deleteArticle(articleId){
  
 
 async function likeArticle(articleId){
-    let token = localStorage.getItem("access")
+    let token = await get_access_token()
 
     const response = await fetch(`${backend_base_url}/article/${articleId}/like/`, {
         method: 'POST',   
@@ -307,8 +339,7 @@ async function likeArticle(articleId){
 
 
 async function bookmarkArticle(articleId){
-    let token = localStorage.getItem("access")
-
+    let token = await get_access_token()
     const response = await fetch(`${backend_base_url}/article/${articleId}/bookmark/`, {
         method: 'POST',   
         headers: {
@@ -327,7 +358,7 @@ async function bookmarkArticle(articleId){
 
 
 async function getFeedArticles(){
-    let token = localStorage.getItem("access")
+    let token = await get_access_token()
     const response = await fetch(`${backend_base_url}/article/feed/`, {
         headers: {
             "Authorization": `Bearer ${token}`
@@ -345,7 +376,7 @@ async function getFeedArticles(){
 
 
 async function getBookmarkArticles(){
-    let token = localStorage.getItem("access")
+    let token = await get_access_token()
     const response = await fetch(`${backend_base_url}/article/bookmark_list/`, {
         headers: {
             "Authorization": `Bearer ${token}`
@@ -363,7 +394,6 @@ async function getBookmarkArticles(){
 
 
 async function getComments(articleId){
-    let token = localStorage.getItem("access")
     const response = await fetch(`${backend_base_url}/article/${articleId}/comment/`)
     
     if(response.status == 200) {
@@ -376,20 +406,21 @@ async function getComments(articleId){
 
 
 async function getProfile(userId){
-    let token = localStorage.getItem("access")
     const response = await fetch(`${backend_base_url}/user/${userId}/`)
     if(response.status==200){
         const response_json = await response.json()
         return response_json
+    }else if(response.status==404){
+        alert("탈퇴했거나 존재하지 않는 회원입니다")
+        window.location.href=`${frontend_base_url}`
     }else{
         alert("불러오는데 실패했습니다")
+        window.location.href=`${frontend_base_url}`
     }
 }
 async function getProfileArticle(userId,pageNum){
-    let token = localStorage.getItem("access")
     const response = await fetch(`${backend_base_url}/user/${userId}/article/?page=${pageNum}`)
     if(response.status==200){
-        console.log(response.body)
         const response_json = await response.json()
         return response_json
     }else{
@@ -398,7 +429,7 @@ async function getProfileArticle(userId,pageNum){
 }
 
 async function followToggle(userId){
-    let token = localStorage.getItem("access")
+    let token = await get_access_token()
     const response = await fetch(`${backend_base_url}/user/${userId}/follow/`, {
         method: 'POST',   
         headers: {
@@ -406,7 +437,6 @@ async function followToggle(userId){
         }
     })
     if(response.status==200 || response.status==400){
-        console.log(response.body)
         const response_json = await response.json()
         alert(response_json.message)
         location.reload()
@@ -416,8 +446,8 @@ async function followToggle(userId){
 }
 
 async function postComment(articleId, newComment){
-    let token = localStorage.getItem("access")
-
+    let token = await get_access_token()
+    console.log(token)
     const response = await fetch(`${backend_base_url}/article/${articleId}/comment/`, {
         method: 'POST',
         headers: {
